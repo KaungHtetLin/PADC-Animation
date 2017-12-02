@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import net.kaunghtetlin.animation.R;
 
@@ -21,14 +23,28 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    private Animation animSmall;
+    private Animation animLarge;
+    private Animation enter;
+
+    private View homeView;
+    private View emptyView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        setupWindowAnimations();
 
         ButterKnife.bind(this,this);
+
+        homeView =findViewById(R.id.drawer_layout);
+        emptyView=findViewById(R.id.vp_empty);
+        animSmall =AnimationUtils.loadAnimation(this, R.anim.scale_to_small);
+        animLarge=AnimationUtils.loadAnimation(this,R.anim.scale_to_large);
+        enter=AnimationUtils.loadAnimation(this,R.anim.enter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,10 +72,25 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_user) {
-            drawerLayout.openDrawer(GravityCompat.END);
-            return true;
+            homeView.startAnimation(animSmall);
+//            emptyView.startAnimation(animLarge);
+            emptyView.startAnimation(enter);
+            emptyView.setVisibility(View.VISIBLE);
+            
+//            drawerLayout.openDrawer(GravityCompat.END);
+//            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+/*
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setEnterTransition(fade);
+
+        Slide slide = new Slide();
+        slide.setDuration(1000);
+        getWindow().setReturnTransition(slide);
+    }*/
 }
