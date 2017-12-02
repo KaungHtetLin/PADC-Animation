@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="net.kaunghtetlin.animation.activities.MainActivity">
+    <item
+        android:id="@+id/menu_user"
+        android:icon="@drawable/dummy_user_picture"
+        android:title="@string/user"
+        app:showAsAction="always" />
+</menu>
